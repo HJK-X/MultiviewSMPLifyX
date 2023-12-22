@@ -1,8 +1,10 @@
 *.pt
 *.obj
 *.pyc
+test/
+data/
 __pycache__/
 .vscode/
 .idea/
-smplx/models/
+smplx/models/smpl
 vposer/models/snapshots/

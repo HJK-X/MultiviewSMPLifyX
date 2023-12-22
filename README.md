@@ -14,12 +14,20 @@ Software Copyright License for **non-commercial scientific research purposes**.
 Please read carefully the [terms and conditions](https://github.com/vchoutas/smplx/blob/master/LICENSE) and any accompanying documentation before you download and/or use the SMPL-X/SMPLify-X model, data and software, (the "Model & Software"), including 3D meshes, blend weights, blend shapes, textures, software, scripts, and animations. By downloading and/or using the Model & Software (including downloading, cloning, installing, and any other use of this github repository), you acknowledge that you have read these terms and conditions, understand them, and agree to be bound by them. If you do not agree with these terms and conditions, you must not download and/or use the Model & Software. Any infringement of the terms of this agreement will automatically terminate your rights under this [License](https://github.com/vchoutas/smplify-x/blob/master/LICENSE).
 
 ## Installation
+Install CUDA >= 11.8
+Install COLMAP https://github.com/colmap/colmap/releases/tag/3.8
+Install OpenPose https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases/tag/v1.7.0
+# for camera matrix
+install nerfstudio https://github.com/nerfstudio-project/nerfstudio/
+
 First, clone this repo and install dependencies:
 ```cmd
 git clone https://github.com/ZhengZerong/MultiviewSMPLifyX
 cd MultiviewSMPLifyX
-pip install -r requirements.txt
+conda create -f environment.yml
+#pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 ```
+might not have to do the last torch install
 
 Then you need to follow the instructions of [SMPL-X](https://github.com/vchoutas/smplx#downloading-the-model) and prepare the SMPL model files in ```smplx/models```. 
 The downloaded SMPL files should be cleaned according to the instruction at [this page](https://github.com/vchoutas/smplx/tree/master/tools). The final directory structure should look like this:
@@ -40,6 +48,18 @@ This repo is used for fitting SMPL models to 3D human scans in our [PaMIR](https
 To use it, please render the 3D scan from multiple viewpoints using the dataset generation code of PaMIR, 
 and use [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) to detect keypoints on the rendered images; 
 see```./dataset_example``` for an example.
+
+then run nerfstudio process data to get camera matrix in almost correct format
+```bash
+ns-process-data video --data .\data\vid.mp4 --output-dir .\
+# make sure transforms.json is in current working directory
+python convert.py 
+```
+move .mat output to data folder
+
+replace \envs\smplx\lib\site-packages\torchgeometry\core\conversions.py in conda environment to fix bool tensor negation
+with conversions.py 
+
 After that, run:
 ```bash
 python main.py --config cfg_files/fit_smpl.yaml --data_folder ./dataset_example/image_data/rp_dennis_posed_004 --output_folder ./dataset_example/mesh_data/rp_dennis_posed_004/smpl
