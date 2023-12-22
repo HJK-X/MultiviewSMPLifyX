@@ -241,8 +241,8 @@ class OpenPose(Dataset):
         output_dict['cam_id'] = cam_id
         output_dict['cam_R'] = np.float32(cam_R)
         output_dict['cam_t'] = np.float32(cam_t)
-        output_dict['cam_fx'] = 5000.0
-        output_dict['cam_fy'] = 5000.0
+        output_dict['cam_fx'] = 885.0
+        output_dict['cam_fy'] = 851.5
         output_dict['cam_cx'] = img.shape[1] / 2
         output_dict['cam_cy'] = img.shape[0] / 2
 

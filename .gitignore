@@ -1,8 +1,6 @@
 *.pt
 *.obj
 *.pyc
-test/
-data/
 __pycache__/
 .vscode/
 .idea/

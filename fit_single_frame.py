@@ -224,6 +224,7 @@ def fit_single_frame(img_list,
             raise NotImplementedError('The interpenetration constraint was removed!')
 
         fct = view_num
+        # print(fct, view_num)
 
         # Weights used for the pose prior and the shape prior
         opt_weights_dict = {'data_weight': data_weights,
@@ -231,29 +232,29 @@ def fit_single_frame(img_list,
                             'shape_weight': shape_weights}
         # adjust energy weight for multi-view setup
         for i in range(len(opt_weights_dict['body_pose_weight'])):
-            opt_weights_dict['body_pose_weight'][i] *= (view_num / fct)
+            opt_weights_dict['body_pose_weight'][i] *= (view_num // fct)
         for i in range(len(opt_weights_dict['shape_weight'])):
-            opt_weights_dict['shape_weight'][i] *= (view_num / fct)
+            opt_weights_dict['shape_weight'][i] *= (view_num // fct)
 
         if use_face:
             opt_weights_dict['face_weight'] = face_joints_weights
             opt_weights_dict['expr_prior_weight'] = expr_weights
             opt_weights_dict['jaw_prior_weight'] = jaw_pose_prior_weights
             for i in range(len(opt_weights_dict['expr_prior_weight'])):
-                opt_weights_dict['expr_prior_weight'][i] *= (view_num / fct)
+                opt_weights_dict['expr_prior_weight'][i] *= (view_num // fct)
             for i in range(len(opt_weights_dict['jaw_prior_weight'])):
-                opt_weights_dict['jaw_prior_weight'][i] *= (view_num / fct)
+                opt_weights_dict['jaw_prior_weight'][i] *= (view_num // fct)
 
         if use_hands:
             opt_weights_dict['hand_weight'] = hand_joints_weights
             opt_weights_dict['hand_prior_weight'] = hand_pose_prior_weights
             for i in range(len(opt_weights_dict['hand_prior_weight'])):
-                opt_weights_dict['hand_prior_weight'][i] *= (view_num / fct)
+                opt_weights_dict['hand_prior_weight'][i] *= (view_num // fct)
 
         if interpenetration:
             opt_weights_dict['coll_loss_weight'] = coll_loss_weights
             for i in range(len(opt_weights_dict['coll_loss_weight'])):
-                opt_weights_dict['coll_loss_weight'][i] *= (view_num / fct)
+                opt_weights_dict['coll_loss_weight'][i] *= (view_num // fct)
 
         keys = opt_weights_dict.keys()
         opt_weights = [dict(zip(keys, vals)) for vals in

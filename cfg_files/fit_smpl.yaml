@@ -8,7 +8,7 @@ output_folder: 'smpl_debug'
 prior_folder: 'priors'
 model_folder: './smplx/models'
 result_folder: 'results'
-gender: "neutral"
+gender: "male"
 model_type: 'smpl'
 # Flag for using the GPU
 use_cuda: True
@@ -23,7 +23,7 @@ num_gaussians: 8
 body_prior_type: 'l2'
 left_hand_prior_type: l2
 right_hand_prior_type: l2
-focal_length: 5000
+focal_length: 862
 num_pca_comps: 12
 # The constant for the robust loss function
 rho: 100
@@ -40,7 +40,7 @@ ftol: 1e-9
 gtol: 1e-9
 lr: 1.0
 # Max number of optimization iterations
-maxiters: 30
+maxiters: 300
 interactive: True
 visualize: False
 
