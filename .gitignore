@@ -4,5 +4,5 @@
 __pycache__/
 .vscode/
 .idea/
-smplx/models/smpl
+smplx/models/
 vposer/models/snapshots/
